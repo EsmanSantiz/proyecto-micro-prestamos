@@ -12,6 +12,7 @@ PUT: Lo aplico para actualizar un recurso existente en su totalidad o para crear
 
 DELETE: Como su traducción lo indica, empleo este método para solicitar la eliminación definitiva de un recurso específico en la base de datos de nuestro sistema.
 
+
 1.2 Estructura JSON
 
 Para continuar con la descripción de las tecnologías de intercambio de información, abordaré el formato que elegí para estructurar los datos de nuestro sistema. En el desarrollo moderno, comprender la organización de los mensajes que viajan por la red es vital para garantizar la rapidez de las aplicaciones. A continuación, detallo el significado de este estándar y los motivos técnicos de su dominio en la industria por encima de las alternativas del pasado.
@@ -19,6 +20,7 @@ Para continuar con la descripción de las tecnologías de intercambio de informa
 Las siglas corresponden a la Notación de Objetos de JavaScript. Se trata de un formato de texto plano completamente independiente del lenguaje de programación, el cual utilicó para almacenar y transportar información mediante colecciones sencillas de atributos y valores de una manera muy limpia.
 
 Su consolidación como el estándar de la industria frente al Lenguaje de Marcado Extensible, denominado comúnmente XML, se debe principalmente a su ligereza técnica. Al eliminar las etiquetas redundantes de apertura y cierre, reduce drásticamente el tamaño de los mensajes, lo que optimiza el consumo de ancho de banda. Asimismo, su estructura se mapea de forma directa a los objetos nativos de los lenguajes de programación modernos, evitando el uso de analizadores complejos y acelerando el tiempo de procesamiento en el servidor.
+
 
 1.3 Códigos de Error HTTP
 
@@ -36,6 +38,7 @@ Error 404 conocido como Not Found: Sucede cuando el cliente intenta acceder a un
 
 Error 503 conocido como Service Unavailable: Representa una falla del servidor que nos advierte que el sistema está temporalmente fuera de línea y no puede recibir peticiones en ese momento exacto, generalmente por mantenimiento programado o sobrecarga técnica.
 
+
 1.4 Especificación OpenAPI o Swagger
 
 Para conectar adecuadamente la pantalla de nuestro cajero con el servidor, comprendí que necesitamos documentar nuestras rutas de comunicación de forma estandarizada. Por esta razón, analicé la Especificación OpenAPI, conocida popularmente por su nombre original Swagger. A continuación, explico qué es esta tecnología y por qué resulta indispensable al momento de entregar los planos de nuestro sistema al resto del equipo.
@@ -43,6 +46,7 @@ Para conectar adecuadamente la pantalla de nuestro cajero con el servidor, compr
 Concepto fundamental: Se trata de un formato de descripción estándar e independiente del lenguaje de programación que nos permite documentar, diseñar y consumir interfaces de red. Funciona como un contrato digital legible tanto para nosotros los humanos como para las computadoras, detallando de manera exacta qué rutas existen, qué datos se requieren enviar y qué respuestas numéricas devolverá el sistema.
 
 Objetivo principal: Su mayor utilidad al entregar los planos de software a un equipo de desarrollo radica en eliminar por completo la ambigüedad. Al generar una página visual e interactiva basada en este documento, permite que los desarrolladores frontales entiendan cómo usar los servicios del servidor y prueben las peticiones en tiempo real sin necesidad de leer nuestro código fuente interno, acelerando enormemente el trabajo en paralelo.
+
 
 1.5 Contratos de Interfaz
 
@@ -52,6 +56,7 @@ Definición en la programación orientada a objetos: Una interfaz es una estruct
 
 El concepto de contrato inmutable: Se dice que actúa como un pacto que no se puede cambiar porque, una vez que la interfaz queda establecida y es adoptada por los repositorios de datos, cualquier modificación en su estructura obligaría a romper el sistema de forma inmediata. Si la lógica de negocio define que necesita un método específico para guardar la información de una cuenta, la clase que conecta directamente con la base de datos está forzada por el compilador a implementar exactamente esa función. Esto nos garantiza una estabilidad absoluta en la arquitectura, permitiéndonos cambiar el motor de la base de datos en el futuro sin alterar una sola línea de la lógica comercial del cajero.
 
+
 1.6 Manejo de Excepciones y Resiliencia
 
 Para finalizar con la fase de investigación conceptual, consideré de vital importancia abordar la forma en que nuestro sistema reacciona ante fallas críticas, específicamente cuando perdemos conexión con la infraestructura de persistencia. A continuación, explico qué significa el rastro de ejecución y los motivos de seguridad por los cuales esta información jamás debe quedar expuesta ante el usuario final.
@@ -60,4 +65,11 @@ Concepto de rastro de ejecución: Comúnmente conocido por su término en inglé
 
 Razones para bloquear su exposición al cliente: Jamás debemos permitir que este bloque de errores crudo llegue a la pantalla del usuario cuando la base de datos colapsa por dos motivos fundamentales. El primero es cuidar la experiencia del cliente, ya que mostrar un texto incomprensible y alarmante en la pantalla del cajero genera confusión y desconfianza operativa. El segundo motivo, y el más crítico a nivel de ciberseguridad, radica en que este reporte expone la estructura íntima de nuestro proyecto al revelar las rutas de nuestras carpetas, las tecnologías que usamos y la arquitectura interna de nuestro código, entregando a posibles atacantes un mapa sumamente detallado para vulnerar nuestra red.
 
+
+
+2.0 Fase 2 Análisis de Arquitectura Comparada
+
+Al analizar el caso de estudio del cajero automático y compararlo con el diagrama de contenedores que diseñamos para nuestro proyecto de tecnología financiera y micropréstamos, concluyo que nuestra arquitectura se asemeja por completo al primer escenario, es decir, el modelo web o distribuido. Nuestra plataforma está estructurada para que múltiples clientes interactúen desde sus propios dispositivos mediante interfaces frontales, las cuales deben comunicarse por internet con nuestros servidores centrales utilizando peticiones HTTP y estructuras de datos en formato JSON, exactamente igual a como lo hace el cajero moderno al solicitar la autorización de un retiro al servidor del banco.
+
+Por el contrario, el segundo escenario del cajero local y monolítico resulta totalmente incompatible con los objetivos de nuestro sistema. Ese modelo ejecuta todas sus capas dentro de una misma máquina física y se comunica de forma directa en la memoria mediante interfaces de código internas. Si aplicáramos esa arquitectura rígida a nuestro proyecto de micropréstamos, estaríamos forzando a que cada usuario instale la base de datos completa y la lógica de negocio en su propio celular, lo cual haría imposible sincronizar los saldos en tiempo real y destruiría la viabilidad de nuestra aplicación.
 
