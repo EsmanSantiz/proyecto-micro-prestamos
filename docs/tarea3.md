@@ -1,14 +1,14 @@
 # Tarea 3: Diseño Arquitectónico Modelo C4
 
 ## 1. Nivel 1: Diagrama de Contexto
-![Diagrama Nivel 1](recursos/Nivel  %201.jpg)
+![Diagrama Nivel 1](recursos/nivel1.png)
 
 ## 2. Nivel 2: Diagrama de Contenedores
-![Diagrama Nivel 2](recursos/Nivel%202.jpg)
+![Diagrama Nivel 2](recursos/nivel2.png)
 
-## 3. Análisis de la "Caja Rota" (Simulación de Fallos)
+## 3. Análisis de la "Caja Rota" mediante Simulación de Fallos
 
-**Escenario:** El contenedor de la Base de Datos (PostgreSQL) pierde conexión durante 10 minutos.
+**Escenario:** El contenedor de la Base de Datos PostgreSQL pierde conexión durante 10 minutos.
 
 **¿Qué ocurre con el resto de los contenedores?**
 El Frontend seguirá funcionando y renderizando la interfaz gráfica, pero no podrá cargar listas ni procesar nuevas solicitudes. El Backend API se mantendrá activo en el servidor, pero al intentar procesar lógica de negocio, sus adaptadores de persistencia fallarán al no encontrar la base de datos, generando excepciones internas.
